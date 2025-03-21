@@ -1,0 +1,27 @@
+app: https://dbdiagram.io/d
+Table user {
+  id SERIAL [pk]
+  email VARCHAR [not null, unique]
+  password VARCHAR [not null]
+  isActive BOOLEAN [default: true]
+  created_at TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+}
+
+Table culture {
+  id SERIAL [pk]
+  name VARCHAR [not null]
+  month_start INT [not null]
+  month_end INT [not null]
+  isActive BOOLEAN [default: true]
+  created_at TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+}
+
+Table event_culture {
+  id SERIAL [pk]
+  culture_id INT [ref: > culture.id]
+  user_id INT [ref: > user.id]
+  date TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  event VARCHAR [not null]
+  mode ENUM('0-Start', '1-Evento', '2-End') [not null]  // Add this field
+  detail TEXT
+}
