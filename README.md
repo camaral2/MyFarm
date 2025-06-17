@@ -18,7 +18,7 @@ pip install sqlalchemy
 
 ### Start my app
 ```
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 ### Config Path of PostgreSQL

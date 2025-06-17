@@ -43,9 +43,23 @@ def list_event_culture(
     event_cultures = db.query(models.Event_Culture).filter(models.Event_Culture.culture_id==idculture).order_by(models.Event_Culture.date.desc()).offset(limit*(page)).limit(limit).all()
     return event_cultures
 
+@router.get("/item/{id}", response_model=schemas.Event_Culture)
+def item_event_culture(
+    id: int,
+    db: Session = Depends(get_db), 
+    get_current_user: schemas.User = Depends(oauth2.get_current_user)):
+
+    event_culture = db.query(models.Event_Culture).filter(models.Event_Culture.id == id).first()
+    if(event_culture): 
+        return event_culture
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'{id} not found')
+
+
 @db_safe
 @router.delete("/{id}")
-def delete_event_culture(id: int, db: Session = Depends(get_db)):
+def delete_event_culture(id: int, db: Session = Depends(get_db),
+    get_current_user: schemas.User = Depends(oauth2.get_current_user)):
     
     event_culture = db.query(models.Event_Culture).filter(models.Event_Culture.id == id)
     if(event_culture.first()): 
@@ -56,3 +70,21 @@ def delete_event_culture(id: int, db: Session = Depends(get_db)):
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'{id} not found')
 
+
+@router.put("/{id}", response_model=schemas.Event_Culture)
+def update_event_culture(
+    id: int, 
+    event_culture_update: schemas.Event_CultureUpdate, 
+    db: Session = Depends(get_db),
+    get_current_user: schemas.User = Depends(oauth2.get_current_user)):
+    
+    event_culture = db.query(models.Event_Culture).filter(models.Event_Culture.id == id)
+    if(event_culture.first()): 
+        event_culture.update(event_culture_update.model_dump())
+        db.commit()
+        
+        return event_culture.first()
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'{id} not found')
+        #response.status_code = status.HTTP_404_NOT_FOUND
+        #return {"success":False, "msg": f'{id} not found'}

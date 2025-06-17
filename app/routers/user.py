@@ -5,6 +5,8 @@ from typing import List
 
 from sqlalchemy.orm import Session
 
+from app import oauth2
+
 from ..utils import utils
 from .. import models, schemas
 from ..database import get_db
@@ -15,7 +17,8 @@ router = APIRouter(
 )
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.User)
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db),
+    get_current_user: schemas.User = Depends(oauth2.get_current_user)):
     
     try:
         user.password = utils.has_password(user.password)
@@ -31,7 +34,8 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(detail=err)  
     
 @router.get("/{id}", response_model=schemas.User)
-def get_user(id: int, db: Session = Depends(get_db)):
+def get_user(id: int, db: Session = Depends(get_db),
+    get_current_user: schemas.User = Depends(oauth2.get_current_user)):
     
     user = db.query(models.User).filter(models.User.id == id).first()
     if(user): 

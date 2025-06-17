@@ -144,7 +144,8 @@ def list_culture_active(
 
 
 @router.get("/{id}", response_model=schemas.Culture)
-def get_culture(id: int, db: Session = Depends(get_db)):
+def get_culture(id: int, db: Session = Depends(get_db),
+    get_current_user: schemas.User = Depends(oauth2.get_current_user)):
     
     culture = db.query(models.Culture).filter(models.Culture.id == id).first()
     if(culture): 
@@ -153,13 +154,16 @@ def get_culture(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'{id} not found')
         #response.status_code = status.HTTP_404_NOT_FOUND
         #return {"success":False, "msg": f'{id} not found'}
+
+
+#    get_current_user: schemas.User = Depends(oauth2.get_current_user),
         
 @router.get("/", response_model=List[schemas.Culture])
 def list_culture(
     db: Session = Depends(get_db), 
-    get_current_user: schemas.User = Depends(oauth2.get_current_user),
     limit:int =200,
-    page:int=1):
+    page:int=1,
+    get_current_user: schemas.User = Depends(oauth2.get_current_user)):
     
     page = paging_set_valid(page)
     
@@ -169,7 +173,8 @@ def list_culture(
 
 
 @router.delete("/{id}")
-def delete_culture(id: int, db: Session = Depends(get_db)):
+def delete_culture(id: int, db: Session = Depends(get_db),
+    get_current_user: schemas.User = Depends(oauth2.get_current_user)):
     
     culture = db.query(models.Culture).filter(models.Culture.id == id)
     if(culture.first()): 

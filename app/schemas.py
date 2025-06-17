@@ -62,3 +62,6 @@ class Event_Culture(Event_CultureBase):
     created_at: datetime
     user: User
     culture: Culture
+    
+class Event_CultureUpdate(Event_CultureBase):
+    date: date
