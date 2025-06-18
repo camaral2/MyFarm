@@ -12,7 +12,7 @@ from fastapi.testclient import TestClient
 from app.oauth2 import create_access_token
 
 from app import models
-from app.utils import has_password
+from app.utils.utils import has_password
 
 SQLALCHEMY_DATABASE_URL = setting.database_url + '_test'
 engine = create_engine(SQLALCHEMY_DATABASE_URL)

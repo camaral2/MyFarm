@@ -14,6 +14,11 @@ class CultureCreate(CultureBase):
 class CultureUpdate(CultureBase):
     pass
 
+class CultureOut(CultureBase):
+    id: int    
+    created_at: datetime
+    status: int
+
 class Culture(CultureBase):
     id: int    
     created_at: datetime
@@ -57,3 +62,6 @@ class Event_Culture(Event_CultureBase):
     created_at: datetime
     user: User
     culture: Culture
+    
+class Event_CultureUpdate(Event_CultureBase):
+    date: date
