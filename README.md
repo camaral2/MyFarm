@@ -19,6 +19,7 @@ pip install sqlalchemy
 ### Start my app
 ```
 uvicorn app.main:app --reload
+APP_ENV=local uvicorn app.main:app --reload
 ```
 
 ### Config Path of PostgreSQL
@@ -67,4 +68,15 @@ pytest --cov=<your_package_or_module> --cov-report=html
 pytest --cov=<your_package_or_module> --cov-fail-under=90
 
 
+## Docker
+### Dev:
 ```
+docker compose --profile dev up --build
+docker compose --profile dev up --build -d
+### Produção:
+````
+docker compose --profile prod up --build -d
+
+
+docker compose down
+docker compose build --no-cache

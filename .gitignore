@@ -131,6 +131,9 @@ celerybeat.pid
 .env
 .venv
 .env_conf
+.env.dev
+.env.prod
+.env.local
 env/
 venv/
 ENV/

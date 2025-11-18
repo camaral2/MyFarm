@@ -1,4 +1,3 @@
-from turtle import shearfactor
 from fastapi import FastAPI, Response, requests, status, HTTPException, Depends, APIRouter
 from typing import List
 from sqlalchemy.orm import Session
