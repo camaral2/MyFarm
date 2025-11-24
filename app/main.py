@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from . import models
 from .database import engine 
 #from routers import health, users
-from .routers import culture, user, auth, event_culture
+from .routers import culture, user, auth, event_culture, cost_credit
 
 app = FastAPI()
 
@@ -33,4 +33,5 @@ app.include_router(culture.router)
 app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(event_culture.router)
+app.include_router(cost_credit.router)
 

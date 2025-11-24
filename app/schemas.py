@@ -65,3 +65,20 @@ class Event_Culture(Event_CultureBase):
     
 class Event_CultureUpdate(Event_CultureBase):
     date: date
+
+class Cost_Credit_CultureBase(BaseModel):
+    type: str
+    amount: float
+    description: Optional[str] = ""
+    date: Optional[date] = None
+
+class Cost_Credit_CultureCreate(Cost_Credit_CultureBase):
+    culture_id: int
+
+class Cost_Credit_Culture(Cost_Credit_CultureBase):
+    id: int
+    created_at: datetime
+    culture: Culture
+
+    class Config:
+        from_attributes = True

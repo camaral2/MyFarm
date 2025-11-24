@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Date
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Date, Float
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from .database import Base
@@ -37,4 +37,18 @@ class Event_Culture(Base):
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
     user = relationship("User")
     culture = relationship("Culture")
+
+class Cost_Credit_Culture(Base):
+    __tablename__ = 'cost_credit_culture'
+    
+    id = Column(Integer, primary_key=True, nullable=False)
+    culture_id = Column(Integer, ForeignKey("culture.id", ondelete="CASCADE"), nullable=False)
+    date = Column(Date, nullable=False, server_default=text('now()'))
+    type = Column(String, nullable=False) # 'Custo' or 'Credito'
+    amount = Column(Float, nullable=False)
+    description = Column(String)
+    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
+    
+    culture = relationship("Culture")
+
     
