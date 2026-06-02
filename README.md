@@ -6,6 +6,9 @@ https://github.com/Sanjeev-Thiyagarajan/fastapi-course
 ## Notes
 ### Generate file requirements.txt
 ```
+python3 -m venv .venv
+source .venv/bin/activate
+
 pip freeze > requirements.txt
 pip install -r requirements.txt
 ```

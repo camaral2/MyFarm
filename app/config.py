@@ -14,5 +14,7 @@ class Settings(BaseSettings):
         # Aqui definimos o arquivo .env padrão
         env_file = f".env.{os.getenv('APP_ENV', 'local')}"
         env_file_encoding = 'utf-8'
+
+        print('env_file:', env_file)
         
 setting = Settings()
