@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
  
 from . import models
 from .database import engine 
@@ -8,12 +9,15 @@ from .routers import culture, user, auth, event_culture, cost_credit
 
 app = FastAPI()
 
-origins = [
+default_origins = [
     "http://localhost.teste.com",
     "https://localhost.teste.com",
     "http://localhost",
     "http://localhost:8080",
 ]
+
+env_origins = os.getenv("CORS_ORIGINS", "")
+origins = [origin.strip() for origin in env_origins.split(",") if origin.strip()] or default_origins
 
 app.add_middleware(
     CORSMiddleware,
@@ -34,4 +38,3 @@ app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(event_culture.router)
 app.include_router(cost_credit.router)
-

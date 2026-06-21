@@ -83,3 +83,14 @@ docker compose --profile prod up --build -d
 
 docker compose down
 docker compose build --no-cache
+
+## Deploy na Vercel
+1. Crie um projeto na Vercel apontando para a pasta `MyFarm`.
+2. Garanta que a Vercel use o arquivo `vercel.json` criado neste diretório.
+3. Configure as variáveis de ambiente:
+   - `DATABASE_URL`
+   - `SECRET_KEY`
+   - `ALGORITHM`
+   - `ACCESS_TOKEN_EXPIRE_MINUTES`
+   - `CORS_ORIGINS` (separado por vírgula, ex: `https://myfarmfront.vercel.app`)
+4. Faça o deploy.
